@@ -15,7 +15,8 @@ import managers.BookmarkManager;
 import managers.UserManager;
 
 
-@WebServlet(urlPatterns = {"/bookmark/save","/bookmark/mybook","/bookmark"})
+@WebServlet(urlPatterns = {"/saveBook","/myBook","/book","/movie","/weblink","/myMovie","/saveMovie","/saveWeblink","/myWeblink"})
+
 public class BookmarkController extends HttpServlet{
 
 	public BookmarkController() {
@@ -27,7 +28,9 @@ public class BookmarkController extends HttpServlet{
 		
 		if(request.getSession().getAttribute("userId") != null) {
 			long userId = (long)request.getSession().getAttribute("userId");
-			if(request.getServletPath().contains("save")) {
+			
+			
+			if(request.getServletPath().contains("saveBook")) {
 				
 				long bookId = Long.parseLong(request.getParameter("bid"));
 				User user = UserManager.getInstance().getUser(userId);
@@ -39,11 +42,15 @@ public class BookmarkController extends HttpServlet{
 				request.setAttribute("books", list);
 				request.getRequestDispatcher("/MyBooks.jsp").forward(request,response);
 				
-			}else if(request.getServletPath().contains("mybook")) {
+			}
+			else if(request.getServletPath().contains("myBook")) {
+				
 				Collection<Bookmark> list = BookmarkManager.getInstance().getBooks(true,userId); 
 				request.setAttribute("books", list);
 				request.getRequestDispatcher("/MyBooks.jsp").forward(request, response);
-			}else {
+			}
+			else if(request.getServletPath().contains("book")){
+				
 				Collection<Bookmark> list = BookmarkManager.getInstance().getBooks(false,userId); 
 				request.setAttribute("books", list);
 				request.getRequestDispatcher("/ViewBooks.jsp").forward(request, response);

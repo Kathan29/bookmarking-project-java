@@ -13,10 +13,17 @@
 
 	<div style="height:25px;background: #DB5227;font-family: Arial;color: white;"">
 		<b>
-		<a href="<%=request.getContextPath() %>/bookmark" style="font-family:garamond;font-size:16px;margin-left:1150px;color:white;text-decoration: none;">Browse</a></b>
+		<a href="<%=request.getContextPath() %>/book" style="font-family:garamond;font-size:16px;margin-left:1150px;color:white;text-decoration: none;">Browse Books</a></b>
 		<a href="<%=request.getContextPath() %>/auth/logout" style="font-family:garamond;font-size:16px;margin-left:10px;color:white;text-decoration: none;">Logout</a></b>				
 	</div>
 	</div>
+	<br><br>
+	
+	<div style="height:10px;font-family:Arial;color:black;align: center">
+	
+	<b>Saved Books!!!!</b>
+	</div>
+	
 	<br><br>
 	
 	<table>

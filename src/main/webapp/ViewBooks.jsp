@@ -13,11 +13,13 @@
 
 	<div style="height:25px;background: #DB5227;font-family: Arial;color: white;">
 		<b>
-		<a href="<%=request.getContextPath() %>/bookmark/mybook" style="font-family:garamond;font-size:16px;margin-left:1150px;color:white;text-decoration: none;">My Books</a></b>
+		<a href="<%=request.getContextPath() %>/myBook" style="font-family:garamond;font-size:16px;margin-left:1150px;color:white;text-decoration: none;">My Books</a></b>
 		<a href="<%=request.getContextPath() %>/auth/logout" style="font-family:garamond;font-size:16px;margin-left:10px;color:white;text-decoration: none;">Logout</a></b>						
 	</div>
 	</div>
 	<br><br>
+	
+	
 	
 	<table>
 	   <c:forEach var = "book" items="${books}">
