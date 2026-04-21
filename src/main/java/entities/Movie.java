@@ -5,6 +5,7 @@ import java.util.Arrays;
 import constants.MovieGenre;
 
 public class Movie extends Bookmark {
+	private String imageUrl;
 	private int releaseYear;
 	private String[] cast, directors;
 	private MovieGenre genre;
@@ -12,6 +13,13 @@ public class Movie extends Bookmark {
 
 	private Movie() {}
 	
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 	public int getReleaseYear() {
 		return releaseYear;
 	}
@@ -53,13 +61,14 @@ public class Movie extends Bookmark {
 	}
 	
 	
-	public static Movie newInstance(long id, String title, String profileUrl, int releaseYear, String[] cast,
+	public static Movie newInstance(long id, String title,String imageUrl, String profileUrl, int releaseYear, String[] cast,
 			String[] directors, MovieGenre genre, double imdbRating) {
 		
 		Movie movie = new Movie();
 		
 		movie.setId(id);
 		movie.setTitle(title);
+		movie.setImageUrl(imageUrl);
 		movie.setProfileUrl(profileUrl);
 		movie.setReleaseYear(releaseYear);
 		movie.setCast(cast);

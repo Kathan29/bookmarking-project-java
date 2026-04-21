@@ -3,10 +3,20 @@ package entities;
 import partners.Sharable;
 
 public class Weblink extends Bookmark implements Sharable{
+	private String imageUrl;
 	private String url;
 	private String host;
 	
 	private Weblink() {}
+	
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
 
 	public String getUrl() {
 		return url;
@@ -25,12 +35,13 @@ public class Weblink extends Bookmark implements Sharable{
 	}
 	
 	
-	public static Weblink newInstance(long id, String title, String url, String host) {
+	public static Weblink newInstance(long id, String title,String imageUrl, String url, String host) {
 		
 		Weblink weblink = new Weblink();
 		
 		weblink.setId(id);
 		weblink.setTitle(title);
+		weblink.setImageUrl(imageUrl);
 		weblink.setUrl(url);
 		weblink.setHost(host);
 		

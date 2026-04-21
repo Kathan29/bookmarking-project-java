@@ -13,8 +13,10 @@
 
 	<div style="height:25px;background: #DB5227;font-family: Arial;color: white;">
 		<b>
-		<a href="<%=request.getContextPath() %>/myBook" style="font-family:garamond;font-size:16px;margin-left:1150px;color:white;text-decoration: none;">My Books</a></b>
-		<a href="<%=request.getContextPath() %>/auth/logout" style="font-family:garamond;font-size:16px;margin-left:10px;color:white;text-decoration: none;">Logout</a></b>						
+		<a href="<%=request.getContextPath() %>/home" style="font-family:garamond;font-size:16px;margin-left:1150px;color:white;text-decoration: none;">Home</a>
+		<a href="<%=request.getContextPath() %>/myBook" style="font-family:garamond;font-size:16px;margin-left:10px;color:white;text-decoration: none;">My Books</a>
+		<a href="<%=request.getContextPath() %>/auth/logout" style="font-family:garamond;font-size:16px;margin-left:20px;color:white;text-decoration: none;">Logout</a>
+		</b>						
 	</div>
 	</div>
 	<br><br>
@@ -29,13 +31,15 @@
 		   </td>
 			    
 		   <td style="color:gray;">
-			 By <span style="color: #B13100;">${book.authors[0]}</span>
+		   Title: <span style="color: #B13100;">${book.title}</span>
+			 <br><br>
+			 By: <span style="color: #B13100;">${book.authors[0]}</span>
 			 <br><br>
 			 Rating: <span style="color: #B13100;">${book.amazonRating}</span>
 			 <br><br>
 			 Publication Year: <span style="color: #B13100;">${book.publicationYear}</span>
 			 <br><br>
-			 <a href = "<%=request.getContextPath() %>/bookmark/save?bid=${book.id}" style="font-size:18px;color:#0058A6;font-weight:bold;text-decoration:none">Save</a>
+			 <a href = "<%=request.getContextPath() %>/saveBook?bid=${book.id}" style="font-size:18px;color:#0058A6;font-weight:bold;text-decoration:none">Save</a>
 		   </td>
 		  </tr>
 		  <tr>

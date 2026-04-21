@@ -62,9 +62,10 @@ public class DataStore {
 		while (rs.next()) {
 			var id = rs.getLong("id");
 			var title = rs.getString("title");
+			var imageUrl = rs.getString("image_url");
 			var url = rs.getString("url");
 			var host = rs.getString("host");
-			Bookmark webBookmark = Weblink.newInstance(id,title,url,host);
+			Bookmark webBookmark = Weblink.newInstance(id,title,imageUrl,url,host);
 			bookmarkList.add(webBookmark);
 		}
 
@@ -74,7 +75,7 @@ public class DataStore {
 
 	private static void loadMovie(Statement stmt) throws SQLException{
 
-		String query = "Select m.id,title,release_year,movie_genre_id,imdb_rating,GROUP_CONCAT(DISTINCT a.name SEPARATOR ',') AS cast,GROUP_CONCAT(DISTINCT d.name SEPARATOR ',') AS directors"
+		String query = "Select m.id,title,image_url,release_year,movie_genre_id,imdb_rating,GROUP_CONCAT(DISTINCT a.name SEPARATOR ',') AS cast,GROUP_CONCAT(DISTINCT d.name SEPARATOR ',') AS directors"
 				+" from movie m,director d,movie_director md,actor a, movie_actor ma"
 				+" where a.id=ma.actor_id and ma.movie_id=m.id and d.id=md.director_id and md.movie_id=m.id"
 				+ " group by m.id";
@@ -86,6 +87,7 @@ public class DataStore {
 
 			var id = rs.getLong("id");
 			var title = rs.getString("title");
+			var imageUrl = rs.getString("image_url");
 			var release_year = rs.getInt("release_year");
 			var genreId = rs.getInt("movie_genre_id");
 			MovieGenre genre = MovieGenre.values()[genreId];
@@ -93,7 +95,7 @@ public class DataStore {
 			var cast = rs.getString("cast").split(",");
 			var directors = rs.getString("directors").split(",");
 
-			Bookmark movieBookmark = Movie.newInstance(id,title,"",release_year,cast,directors,genre,imdb_rating);
+			Bookmark movieBookmark = Movie.newInstance(id,title,imageUrl,"",release_year,cast,directors,genre,imdb_rating);
 			bookmarkList.add(movieBookmark);
 		}
 

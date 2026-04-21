@@ -94,4 +94,13 @@ public class BookmarkManager {
 		
 		return BookmarkDao.getBook(bookId);
 	}
+
+	public Bookmark getMovie(long movieId) {
+		return BookmarkDao.getMovie(movieId);
+	}
+
+	public Collection<Bookmark> getMovies(boolean isBookmarked, long userId) {
+		
+		return BookmarkDao.getMovies(isBookmarked,userId);
+	}
 }

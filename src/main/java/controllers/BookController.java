@@ -1,11 +1,5 @@
 package controllers;
 
-import java.io.IOException;
-import java.util.Collection;
-
-import constants.KidFriendlyStatus;
-import entities.Bookmark;
-import entities.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,18 +8,31 @@ import jakarta.servlet.http.HttpServletResponse;
 import managers.BookmarkManager;
 import managers.UserManager;
 
+import java.io.IOException;
+import java.util.Collection;
 
+import entities.Bookmark;
+import entities.User;
 
+/**
+ * Servlet implementation class BookController
+ */
+@WebServlet(urlPatterns = {"/saveBook","/myBook","/book"})
+public class BookController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public BookController() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
-public class BookmarkController extends HttpServlet{
-
-	public BookmarkController() {
-		super();
-	}
-	
-
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		if(request.getSession().getAttribute("userId") != null) {
 			long userId = (long)request.getSession().getAttribute("userId");
 			
@@ -60,28 +67,14 @@ public class BookmarkController extends HttpServlet{
 		else {
 			request.getRequestDispatcher("/Login.jsp").forward(request, response);
 		}
-	
-		
 	}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-	
-	public void storeBookmarking(User u, Bookmark bookmarked) {
-		BookmarkManager.getInstance().storeBookmarking(u,bookmarked);
-	}
-	public void setKidFriendlyStatus(User user, KidFriendlyStatus takeDecision, Bookmark bookmark) {
-		
-		BookmarkManager.getInstance().setKidFriendlyStatus(user,takeDecision,bookmark);
-		
-	}
 
-	public void share(User user, Bookmark bookmark) {
-		BookmarkManager.getInstance().share(user,bookmark);
-		
-	}
-	
-	
 }
