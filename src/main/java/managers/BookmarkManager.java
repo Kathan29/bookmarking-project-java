@@ -1,7 +1,5 @@
 package managers;
 
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.util.Collection;
 
 import constants.KidFriendlyStatus;
@@ -11,8 +9,6 @@ import entities.Bookmark;
 import entities.User;
 import entities.UserBookmark;
 import entities.Weblink;
-import util.HttpConnect;
-import util.IOUtil;
 
 public class BookmarkManager {
 
@@ -32,6 +28,7 @@ public class BookmarkManager {
 		userBookmark.setUser(u);
 		userBookmark.setBookmark(bookmarked);
 		
+		/*
 		//We check if it is weblink , then we download it and store in disk
 		if(bookmarked instanceof Weblink) {
 			String url = ((Weblink)bookmarked).getUrl();
@@ -50,13 +47,14 @@ public class BookmarkManager {
 					e.printStackTrace();
 				}
 			}
-		}
+		}*/
 		
 		BookmarkDao.storeBookmarking(userBookmark);
 		
 	}
 
 	public void setKidFriendlyStatus(User user, KidFriendlyStatus takeDecision, Bookmark bookmark) {
+		
 		bookmark.setKidFriendlyStatus(takeDecision);
 		bookmark.setKidFriendlyMarkedBy(user);
 		BookmarkDao.updateKidFriendlyStatus(bookmark);
@@ -113,5 +111,10 @@ public class BookmarkManager {
 	public void deleteBookmarking(long userId, Bookmark bookmark) {
 		
 		BookmarkDao.deleteBookmarking(userId,bookmark);
+	}
+
+	public Collection<Bookmark> getSharableBooksWeblinks() {
+		
+		return BookmarkDao.getSharableBooksWeblinks();
 	}
 }

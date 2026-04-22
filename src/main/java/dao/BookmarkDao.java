@@ -387,4 +387,43 @@ public class BookmarkDao {
 		}
 		
 	}
+
+	public static Collection<Bookmark> getSharableBooksWeblinks() {
+		Collection<Bookmark> result = new ArrayList<Bookmark>();
+		try(Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/thrill_io","root","root");
+				Statement stmt = conn.createStatement();){
+			String query = "select * from book where kid_friendly_status=1";
+			ResultSet rs = stmt.executeQuery(query);
+			
+			while(rs.next()) {
+				long id = rs.getLong("id");
+				String title = rs.getString("title");
+				String imageUrl = rs.getString("image_url");
+				int publicationYear = rs.getInt("publication_year");
+				double amazonRating = rs.getDouble("amazon_rating");
+				
+				Bookmark book = Book.newInstance(id, title, imageUrl, publicationYear, "", null, null, amazonRating, KidFriendlyStatus.APPROVED);
+				result.add(book);
+			}
+			
+			query = "select * from weblink where kid_friendly_status=1";
+			rs = stmt.executeQuery(query);
+			
+			while(rs.next()) {
+				long id = rs.getLong("id");
+				String title = rs.getString("title");
+				String imageUrl = rs.getString("image_url");
+				String url = rs.getString("url");
+				String host = rs.getString("host");
+				
+				Bookmark weblink = Weblink.newInstance(id, title, imageUrl, url,host,KidFriendlyStatus.APPROVED);
+				result.add(weblink);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

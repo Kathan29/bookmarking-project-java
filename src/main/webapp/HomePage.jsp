@@ -128,6 +128,13 @@
             ### Web Links
             <p>Save articles, tools, and websites.</p>
         </a>
+        <c:if test="${sessionScope.userType==1 or sessionScope.userType==2}">
+         <a href="${pageContext.request.contextPath}/share" class="card">
+            <img src="${pageContext.request.contextPath}/image/sharing_image.jpg" alt="sharing image" height="250px" width="230px"><br>
+            ### Share to Partners
+            <p>Share to partner websites.</p>
+        </a>
+        </c:if>
     </main>
 
 </body>

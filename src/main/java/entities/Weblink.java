@@ -79,4 +79,10 @@ public class Weblink extends Bookmark implements Sharable{
 		return xmlData.toString();	
 	}
 
+	@Override
+	public String getItemType() {
+		
+		return "Weblink";
+	}
+
 }
