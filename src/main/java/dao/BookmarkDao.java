@@ -16,6 +16,7 @@ import entities.Book;
 import entities.Bookmark;
 import entities.Movie;
 import entities.UserBookmark;
+import entities.Weblink;
 
 public class BookmarkDao {
 	public List<List<Bookmark>> getBookmark() {
@@ -278,6 +279,71 @@ public class BookmarkDao {
 
 				Bookmark bookmark = Movie.newInstance(id, title, imageUrl, "", release_year, cast, directors, genre,
 						imdb_rating);
+				result.add(bookmark);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	public static Bookmark getWeblink(long weblinkId) {
+		
+		Bookmark bookmark = null;
+
+		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/thrill_io", "root", "root");
+				Statement stmt = conn.createStatement();) {
+
+			String query = "Select * from weblink where id="+ weblinkId;
+			ResultSet rs = stmt.executeQuery(query);
+
+			while (rs.next()) {
+
+				var id = rs.getLong("id");
+				var title = rs.getString("title");
+				var imageUrl = rs.getString("image_url");
+				var url = rs.getString("url");
+				var host = rs.getString("host");
+
+				bookmark = Weblink.newInstance(id, title, imageUrl,url,host);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return bookmark;
+	}
+
+	public static Collection<Bookmark> getWeblinks(boolean isBookmarked, long userId) {
+		Collection<Bookmark> result = new ArrayList<Bookmark>();
+
+		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/thrill_io", "root", "root");
+				Statement stmt = conn.createStatement();) {
+
+			String query = "";
+			if (!isBookmarked) {
+				query = "select * from weblink where id NOT IN (select uw.weblink_id from user u,user_weblink uw where u.id="+
+			userId+" and u.id=uw.user_id) group by id";
+			} else {
+				query =  "select * from weblink where id IN (select uw.weblink_id from user u,user_weblink uw where u.id="+
+						userId+" and u.id=uw.user_id) group by id";
+			}
+
+			ResultSet rs = stmt.executeQuery(query);
+
+			while (rs.next()) {
+				var id = rs.getLong("id");
+				var title = rs.getString("title");
+				var imageUrl = rs.getString("image_url");
+				var url = rs.getString("url");
+				var host = rs.getString("host");
+
+				Bookmark bookmark = Weblink.newInstance(id, title, imageUrl,url,host);
 				result.add(bookmark);
 			}
 

@@ -103,4 +103,14 @@ public class BookmarkManager {
 		
 		return BookmarkDao.getMovies(isBookmarked,userId);
 	}
+
+	public Bookmark getWeblink(long weblinkId) {
+	
+		return BookmarkDao.getWeblink(weblinkId);
+	}
+
+	public Collection<Bookmark> getWeblinks(boolean isBookmarked, long userId) {
+	
+		return BookmarkDao.getWeblinks(isBookmarked,userId);
+	}
 }
