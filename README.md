@@ -6,7 +6,7 @@ Thrill.io is a Java-based web application designed to help users organize and sh
 
 ### 1. Centralized Dashboard
 A clean, card-based navigation system to jump between Books, Movies, Web Links, and the Sharing portal.
-![Dashboard](project_images/screenshot1.jpg)
+![Dashboard](/project_images/screenshot1.png)
 
 ### 2. Media Management
 * **Books:** Browse a collection of literature with ratings and publication details.
@@ -24,7 +24,7 @@ Features an interactive "Kid Friendly Eligibility" system where users can **Appr
 
 ### 5. Sharing Feature
 A dedicated module to share curated content with external partners.
-![Sharing](project_images/sceenshot5.jpg)
+![Sharing](project_images/sceenshot5.png)
 
 ## 🛠️ Tech Stack
 * **Backend:** Java (Servlets & JSP)
