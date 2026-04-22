@@ -104,7 +104,7 @@
     <header>
         <div class="welcome-msg">
             Welcome back, <span class="user-name">
-                <c:out value="${sessionScope.userId}" default="Guest" />
+                <c:out value="${sessionScope.name}" default="Guest" />
             </span>!
         </div>
         <a href="<%=request.getContextPath() %>/auth/logout" style="font-family:garamond;font-size:25px;margin-left:700px;color:black;text-decoration: none;">Logout</a></b>				

@@ -11,13 +11,14 @@ import managers.UserManager;
 import java.io.IOException;
 import java.util.Collection;
 
+import constants.KidFriendlyStatus;
 import entities.Bookmark;
 import entities.User;
 
 /**
  * Servlet implementation class MovieController
  */
-@WebServlet(urlPatterns = {"/saveMovie","/myMovie","/movie"})
+@WebServlet(urlPatterns = {"/saveMovie","/myMovie","/deleteMovie","/movie","/approveMovieKF","/rejectMovieKF"})
 public class MovieController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -56,7 +57,35 @@ public class MovieController extends HttpServlet {
 				request.setAttribute("movies", list);
 				request.getRequestDispatcher("/MyMovies.jsp").forward(request, response);
 			}
-			else if(request.getServletPath().contains("movie")){
+			else if(request.getServletPath().contains("deleteMovie")) {
+				
+				long movieId = Long.parseLong(request.getParameter("mid"));
+				Bookmark bookmark = BookmarkManager.getInstance().getMovie(movieId);
+				
+				BookmarkManager.getInstance().deleteBookmarking(userId, bookmark);
+				
+				Collection<Bookmark> list = BookmarkManager.getInstance().getMovies(true,userId); 
+				request.setAttribute("movies", list);
+				request.getRequestDispatcher("/MyMovies.jsp").forward(request,response);
+			}
+			else if(request.getServletPath().contains("approveMovieKF")) {
+				
+				long movieId = Long.parseLong(request.getParameter("mid"));
+				User user = UserManager.getInstance().getUser(userId);
+				Bookmark bookmark = BookmarkManager.getInstance().getMovie(movieId);
+				BookmarkManager.getInstance().setKidFriendlyStatus(user, KidFriendlyStatus.APPROVED, bookmark);
+				
+				response.sendRedirect(request.getContextPath() + "/movie");
+			}
+			else if(request.getServletPath().contains("rejectMovieKF")) {
+				long movieId = Long.parseLong(request.getParameter("mid"));
+				User user = UserManager.getInstance().getUser(userId);
+				Bookmark bookmark = BookmarkManager.getInstance().getMovie(movieId);
+				BookmarkManager.getInstance().setKidFriendlyStatus(user, KidFriendlyStatus.REJECTED, bookmark);
+				
+				response.sendRedirect(request.getContextPath() + "/movie");
+			}
+			else{
 				
 				Collection<Bookmark> list = BookmarkManager.getInstance().getMovies(false,userId); 
 				request.setAttribute("movies", list);

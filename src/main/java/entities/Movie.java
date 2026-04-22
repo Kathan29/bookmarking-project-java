@@ -2,6 +2,7 @@ package entities;
 
 import java.util.Arrays;
 
+import constants.KidFriendlyStatus;
 import constants.MovieGenre;
 
 public class Movie extends Bookmark {
@@ -62,7 +63,7 @@ public class Movie extends Bookmark {
 	
 	
 	public static Movie newInstance(long id, String title,String imageUrl, String profileUrl, int releaseYear, String[] cast,
-			String[] directors, MovieGenre genre, double imdbRating) {
+			String[] directors, MovieGenre genre, double imdbRating,KidFriendlyStatus kidFriendlyStatus) {
 		
 		Movie movie = new Movie();
 		
@@ -75,6 +76,7 @@ public class Movie extends Bookmark {
 		movie.setDirectors(directors);
 		movie.setGenre(genre);
 		movie.setImdbRating(imdbRating);
+		movie.setKidFriendlyStatus(kidFriendlyStatus);
 
 		return movie;
 	}

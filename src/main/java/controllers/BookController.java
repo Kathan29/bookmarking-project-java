@@ -11,13 +11,14 @@ import managers.UserManager;
 import java.io.IOException;
 import java.util.Collection;
 
+import constants.KidFriendlyStatus;
 import entities.Bookmark;
 import entities.User;
 
 /**
  * Servlet implementation class BookController
  */
-@WebServlet(urlPatterns = {"/saveBook","/myBook","/book"})
+@WebServlet(urlPatterns = {"/saveBook","/myBook","/deleteBook","/book","/approveBookKF","/rejectBookKF"})
 public class BookController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -56,8 +57,35 @@ public class BookController extends HttpServlet {
 				request.setAttribute("books", list);
 				request.getRequestDispatcher("/MyBooks.jsp").forward(request, response);
 			}
-			else if(request.getServletPath().contains("book")){
+			else if(request.getServletPath().contains("deleteBook")){
 				
+				long bookId = Long.parseLong(request.getParameter("bid"));
+				
+				Bookmark bookmark = BookmarkManager.getInstance().getBook(bookId);
+				
+				BookmarkManager.getInstance().deleteBookmarking(userId,bookmark);
+				
+				Collection<Bookmark> list = BookmarkManager.getInstance().getBooks(true,userId); 
+				request.setAttribute("books", list);
+				request.getRequestDispatcher("/MyBooks.jsp").forward(request, response);
+			}
+			else if(request.getServletPath().contains("approveBookKF")) {
+				long bookId = Long.parseLong(request.getParameter("bid"));
+				User user = UserManager.getInstance().getUser(userId);
+				Bookmark bookmark = BookmarkManager.getInstance().getBook(bookId);
+				BookmarkManager.getInstance().setKidFriendlyStatus(user, KidFriendlyStatus.APPROVED, bookmark);
+				
+				response.sendRedirect(request.getContextPath() + "/book");
+			}
+			else if(request.getServletPath().contains("rejectBookKF")) {
+				long bookId = Long.parseLong(request.getParameter("bid"));
+				User user = UserManager.getInstance().getUser(userId);
+				Bookmark bookmark = BookmarkManager.getInstance().getBook(bookId);
+				BookmarkManager.getInstance().setKidFriendlyStatus(user, KidFriendlyStatus.REJECTED, bookmark);
+				
+				response.sendRedirect(request.getContextPath() + "/book");
+			}
+			else {
 				Collection<Bookmark> list = BookmarkManager.getInstance().getBooks(false,userId); 
 				request.setAttribute("books", list);
 				request.getRequestDispatcher("/ViewBooks.jsp").forward(request, response);

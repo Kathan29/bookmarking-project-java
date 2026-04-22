@@ -11,13 +11,14 @@ import managers.UserManager;
 import java.io.IOException;
 import java.util.Collection;
 
+import constants.KidFriendlyStatus;
 import entities.Bookmark;
 import entities.User;
 
 /**
  * Servlet implementation class WeblinkController
  */
-@WebServlet(urlPatterns = {"/saveWeblink","/myWeblink","/weblink"})
+@WebServlet(urlPatterns = {"/saveWeblink","/myWeblink","/deleteWeblink","/weblink","/approveWebKF","/rejectWebKF"})
 public class WeblinkController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -56,7 +57,35 @@ public class WeblinkController extends HttpServlet {
 				request.setAttribute("weblinks", list);
 				request.getRequestDispatcher("/MyWeblinks.jsp").forward(request, response);
 			}
-			else if(request.getServletPath().contains("weblink")){
+			else if(request.getServletPath().contains("deleteWeblink")) {
+				long weblinkId = Long.parseLong(request.getParameter("wid"));
+
+				Bookmark bookmark = BookmarkManager.getInstance().getWeblink(weblinkId);
+				
+				BookmarkManager.getInstance().deleteBookmarking(userId, bookmark);
+				
+				Collection<Bookmark> list = BookmarkManager.getInstance().getWeblinks(true,userId); 
+				request.setAttribute("weblinks", list);
+				request.getRequestDispatcher("/MyWeblinks.jsp").forward(request,response);
+			}
+			else if(request.getServletPath().contains("approveWebKF")) {
+				
+				long weblinkId = Long.parseLong(request.getParameter("wid"));
+				User user = UserManager.getInstance().getUser(userId);
+				Bookmark bookmark = BookmarkManager.getInstance().getWeblink(weblinkId);
+				BookmarkManager.getInstance().setKidFriendlyStatus(user, KidFriendlyStatus.APPROVED, bookmark);
+				
+				response.sendRedirect(request.getContextPath() + "/weblink");
+			}
+			else if(request.getServletPath().contains("rejectWebKF")) {
+				long weblinkId = Long.parseLong(request.getParameter("wid"));
+				User user = UserManager.getInstance().getUser(userId);
+				Bookmark bookmark = BookmarkManager.getInstance().getWeblink(weblinkId);
+				BookmarkManager.getInstance().setKidFriendlyStatus(user, KidFriendlyStatus.REJECTED, bookmark);
+				
+				response.sendRedirect(request.getContextPath() + "/weblink");
+			}
+			else{
 				
 				Collection<Bookmark> list = BookmarkManager.getInstance().getWeblinks(false,userId); 
 				request.setAttribute("weblinks", list);

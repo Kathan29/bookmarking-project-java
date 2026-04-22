@@ -1,5 +1,6 @@
 package entities;
 
+import constants.KidFriendlyStatus;
 import partners.Sharable;
 
 public class Weblink extends Bookmark implements Sharable{
@@ -35,7 +36,7 @@ public class Weblink extends Bookmark implements Sharable{
 	}
 	
 	
-	public static Weblink newInstance(long id, String title,String imageUrl, String url, String host) {
+	public static Weblink newInstance(long id, String title,String imageUrl, String url, String host, KidFriendlyStatus kidFriendlyStatus) {
 		
 		Weblink weblink = new Weblink();
 		
@@ -44,6 +45,7 @@ public class Weblink extends Bookmark implements Sharable{
 		weblink.setImageUrl(imageUrl);
 		weblink.setUrl(url);
 		weblink.setHost(host);
+		weblink.setKidFriendlyStatus(kidFriendlyStatus);
 		
 		return weblink;
 	}

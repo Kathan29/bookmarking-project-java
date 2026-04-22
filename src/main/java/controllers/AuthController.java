@@ -1,18 +1,14 @@
 package controllers;
 
+import java.io.IOException;
+
+import entities.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import managers.BookmarkManager;
 import managers.UserManager;
-
-import java.io.IOException;
-import java.util.Collection;
-
-import entities.Bookmark;
-import entities.User;
 
 /**
  * Servlet implementation class AuthController
@@ -39,10 +35,11 @@ public class AuthController extends HttpServlet {
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
 			
-			long userId = UserManager.getInstance().authenticate(email,password);
-			
-			if(userId!=-1) {
-				request.getSession().setAttribute("userId", userId);
+			User user = UserManager.getInstance().authenticate(email,password);
+			if(user!=null) {	
+				request.getSession().setAttribute("userId", user.getId());
+				request.getSession().setAttribute("name", user.getFirstName());
+				request.getSession().setAttribute("userType", user.getUserType().ordinal());
 				request.getRequestDispatcher("home").forward(request, response);
 			}else {
 				request.getRequestDispatcher("/Login.jsp").forward(request, response);

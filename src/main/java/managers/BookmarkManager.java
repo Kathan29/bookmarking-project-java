@@ -3,7 +3,6 @@ package managers;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.Collection;
-import java.util.List;
 
 import constants.KidFriendlyStatus;
 import dao.BookmarkDao;
@@ -18,7 +17,6 @@ import util.IOUtil;
 public class BookmarkManager {
 
 	private static BookmarkManager instance = new BookmarkManager();
-	private static BookmarkDao dao = new BookmarkDao();
 
 	private BookmarkManager() {}
 
@@ -26,9 +24,7 @@ public class BookmarkManager {
 		return instance;
 	}
 
-	public List<List<Bookmark>> getBookmark(){
-		return dao.getBookmark();
-	}
+	
 
 	public void storeBookmarking(User u, Bookmark bookmarked) {
 		
@@ -112,5 +108,10 @@ public class BookmarkManager {
 	public Collection<Bookmark> getWeblinks(boolean isBookmarked, long userId) {
 	
 		return BookmarkDao.getWeblinks(isBookmarked,userId);
+	}
+
+	public void deleteBookmarking(long userId, Bookmark bookmark) {
+		
+		BookmarkDao.deleteBookmarking(userId,bookmark);
 	}
 }

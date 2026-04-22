@@ -3,6 +3,7 @@ package entities;
 import java.util.Arrays;
 
 import constants.BookGenre;
+import constants.KidFriendlyStatus;
 import partners.Sharable;
 
 public class Book extends Bookmark implements Sharable{
@@ -64,7 +65,7 @@ public class Book extends Bookmark implements Sharable{
 
 	
 	public static Book newInstance(long id, String title,String imageUrl, int publicationYear, String publisher, BookGenre genre, String[] authors,
-			double amazonRating) {
+			double amazonRating,KidFriendlyStatus kidFriendlyStatus) {
 		
 		Book book = new Book();
 		
@@ -76,6 +77,7 @@ public class Book extends Bookmark implements Sharable{
 		book.setAuthors(authors);
 		book.setAmazonRating(amazonRating);
 		book.setPublisher(publisher);
+		book.setKidFriendlyStatus(kidFriendlyStatus);
 		
 		return book;
 	}
