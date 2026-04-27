@@ -1,0 +1,17 @@
+/build/
+# Eclipse metadata
+.metadata
+.classpath
+.project
+.settings/
+bin/
+
+# Compiled class files
+*.class
+
+# Maven build folder
+target/
+
+# OS specific files
+.DS_Store
+Thumbs.db
